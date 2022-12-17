@@ -3,7 +3,6 @@ Gas station Implementation
 <hr>
 Group Members
 <br>
-text
 <br>
 <ol>
   <li>Oshen Geenath - IIT ID: 20210434 </li>
