@@ -2,8 +2,14 @@ package coursework;
 
 public class Main {
 
-    public static void main(String[] args) {
-        initialize();
+    public static void main(String[] args) {DB_Connector db = new DB_Connector();
+        db.connect();
+        Owner owner = db.getOwner();
+        System.out.println(owner.getPetrolRepository().getCapacity());
+        System.out.println(owner.getDieselDispenser().get(0).getFuelType());
+        System.out.println(owner.getDieselRepository().getCapacity());
+        System.out.println(owner.getPetrolDispensers());
+        //initialize();
     }
 
     private static void initialize(){
