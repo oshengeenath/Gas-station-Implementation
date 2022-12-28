@@ -1,13 +1,38 @@
 package coursework;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {DB_Connector db = new DB_Connector();
+        //-----------------------------Getting user inputs------------------------------------------------------------
+        Scanner Input = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter 1 to add customer information" + '\n' +
+                "Enter 2 to serve a vehicle" + '\n' +
+                "Enter 3 to check stats" + '\n' +
+                "Enter 4 to add a new dispenser");
+        int user_input = Input.nextInt();  // Read user input
+
+        //-----------------------------------According to the user inputs running the program-------------------------
+        if (user_input == 1){
+            DB_Connector obj = new DB_Connector();
+        } else if (user_input == 2) {
+            
+        }
+        {
+            
+        }
+        //--------------------------------------------------------------------
+        
+        //-----------------------------------------------------------------
         db.connect();
         Owner owner = db.getOwner();
         System.out.println(owner.getPetrolRepository().getCapacity());
-        System.out.println(owner.getDieselDispenser().get(0).getFuelType());
         System.out.println(owner.getDieselRepository().getCapacity());
+        System.out.println(owner.getDieselDispenser().get(0).getFuelType());
         System.out.println(owner.getPetrolDispensers());
         //initialize();
     }
@@ -58,7 +83,12 @@ public class Main {
         owner.addDieselDispenser(dieselDispenser1);
         owner.addDieselDispenser(dieselDispenser2);
         owner.addDieselDispenser(dieselDispenser3);
+
+
+
+
     }
+
 }
 
 

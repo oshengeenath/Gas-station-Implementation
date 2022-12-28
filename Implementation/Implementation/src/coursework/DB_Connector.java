@@ -1,14 +1,31 @@
 package coursework;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class DB_Connector { Connection con = null;
     public void connect(){
+        Scanner scanner = new Scanner(System.in);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "root");
+            Statement statement = con.createStatement();
+            System.out.println("Enter the customer name : ");
+            String customer_ID = scanner.nextLine();
+            System.out.println("Enter vehicle number :" );
+            String registration_No = scanner.nextLine();
+            System.out.println("Enter the vehicle type : ");
+            String vehicle_Type = scanner.nextLine();
+            System.out.println("Enter the fuel type : ");
+            String fuel_Type = scanner.nextLine();
+            System.out.println("Enter the number of liters needed : ");
+            int fuel_Needed = scanner.nextInt();
+            //Give the query
+
+            statement.executeUpdate("INSERT INTO customer VALUES('"+customer_ID+"','"+registration_No+"','"+vehicle_Type+"','"+fuel_Type+"','"+fuel_Needed+"')");
+            System.out.println("Values added successfully");
         } catch (Exception e){
-            System.out.println(e);
+            System.out.println("Invalid data please re-enter");
         }
     }
 
