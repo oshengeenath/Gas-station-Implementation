@@ -7,6 +7,7 @@ public class DieselFuelDispenserManager implements FuelDispenseManager {
     //Defining variables
     private static ArrayList<Data> dataArray = new ArrayList<>();
     private static int totalNumberOfVehiclesServed = 0;
+    private int dispense_ID;
     private static float totalProfit = 0;
     private Queue_Management_System fuelQueue;
     private FuelRepository repository;
@@ -14,16 +15,18 @@ public class DieselFuelDispenserManager implements FuelDispenseManager {
     private String fuelType;
 
     //Creating constructors for the variables
-    public DieselFuelDispenserManager(Queue_Management_System fuelQueue, FuelRepository repository, float pricePerLiter, String fuelType) {
+    public DieselFuelDispenserManager(int dispense_ID,Queue_Management_System fuelQueue, FuelRepository repository, float pricePerLiter, String fuelType) {
         this.fuelQueue = fuelQueue;
         this.repository = repository;
         DieselFuelDispenserManager.pricePerLiter = pricePerLiter;
         this.fuelType = fuelType;
+        this.dispense_ID = dispense_ID;
+
     }
 
     @Override
     public void serveCustomer(DateTime date) {
-        Data data = new Data(fuelQueue.getFirstCustomer(), date);
+        Data data = new Data(this.dispense_ID,fuelQueue.getFirstCustomer(), date);
         dataArray.add(data);
         incrementVehiclesServed();
         incrementProfit(fuelQueue.getFirstCustomer());
@@ -39,7 +42,7 @@ public class DieselFuelDispenserManager implements FuelDispenseManager {
     }
 
     public static Customer getHighestAmountOfFuel(DateTime date){
-        Customer highestAmountOfFuel = new Customer("car", "diesel", 20.5, false);
+        Customer highestAmountOfFuel = new Customer(1, 2, 20, false);
         for (Data data : dataArray) {
             if (data.getDateTime() == date) {
                 if (data.getCustomer().getFuel_Needed() > highestAmountOfFuel.getFuel_Needed()) {
@@ -49,11 +52,14 @@ public class DieselFuelDispenserManager implements FuelDispenseManager {
         }
         return highestAmountOfFuel;
     }
+    public static void addDataArray(ArrayList<Data>dataArrayList){
+        dataArray = dataArrayList;
+    }
 
-    public static float totalFuelDispensed(String vehicleType){
+    public static float totalFuelDispensed(int vehicleType){
         float totalFuelDispensed = 0;
         for (Data data : dataArray) {
-            if (data.getCustomer().getVehicle_type().equals(vehicleType)) {
+            if (data.getCustomer().getVehicle_type() == (vehicleType)) {
                 totalFuelDispensed += data.getCustomer().getFuel_Needed();
             }
         }
@@ -101,4 +107,5 @@ public class DieselFuelDispenserManager implements FuelDispenseManager {
     public String getFuelType() {
         return fuelType;
     }
+
 }
