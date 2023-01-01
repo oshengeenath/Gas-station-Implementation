@@ -190,6 +190,21 @@ public class Main {
                 }
             }
         }
+        else if( user_input == 4){
+            Scanner scannerCase4 = new Scanner(System.in);
+            System.out.println("""
+                        press 1 to add 92 Octane fuel Dispenser
+                        press 2 to add Diesel fuel Dispenser""");
+            String selectedStats2 = scannerCase4.next();
+            switch (selectedStats2) {
+                case "1" -> {
+                    db.add_92Octane_dispenser();
+                }
+                case "2" -> {
+                    db.add_diesel_dispenser();
+                }
+            }
+        }
 
 
         //--------------------------------------------------------------------

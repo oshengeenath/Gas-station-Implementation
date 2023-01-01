@@ -8,7 +8,7 @@ public class DB_Connector { Connection con = null;
     public void connect(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "root");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw?useSSL=false&serverTimezone=Asia/Colombo", "root", "root");
 
         } catch (Exception e){
             System.out.println(e);
@@ -18,7 +18,7 @@ public class DB_Connector { Connection con = null;
         Scanner scanner = new Scanner(System.in);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "root");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw?useSSL=false&serverTimezone=Asia/Colombo", "root", "root");
             Statement statement = con.createStatement();
             System.out.println("Enter the ID : ");
             int customer_ID = scanner.nextInt();
@@ -36,6 +36,65 @@ public class DB_Connector { Connection con = null;
             System.out.println("Values added successfully");
         } catch (Exception e){
             System.out.println("Invalid data please re-enter");
+
+        }
+    }
+
+    public void add_92Octane_dispenser(){
+        Scanner scanner = new Scanner(System.in);
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw?useSSL=false&serverTimezone=Asia/Colombo", "root", "root");
+            Statement statement = con.createStatement();
+
+            System.out.println("Enter the Dispenser ID : ");
+            int Dispenser_ID = scanner.nextInt();
+
+            System.out.println("Enter price per liter :" );
+            int price_per_liter = scanner.nextInt();
+
+            System.out.println("Enter the repository ID : ");
+            int repository_ID = scanner.nextInt();
+
+            Scanner myObj = new Scanner(System.in);
+            System.out.println("Enter the Allowed Vehicles : ");
+            String Allowed_Vehicles = myObj.nextLine();
+
+            //Give the query
+            statement.executeUpdate("INSERT INTO 92octane_dispenser VALUES('"+Dispenser_ID+"','"+price_per_liter+"','"+repository_ID+"','"+Allowed_Vehicles+"')");
+            System.out.println("Values added successfully");
+        } catch (Exception e){
+            System.out.println("Invalid data please re-enter");
+
+        }
+    }
+
+    public void add_diesel_dispenser(){
+        Scanner scanner = new Scanner(System.in);
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw?useSSL=false&serverTimezone=Asia/Colombo", "root", "root");
+            Statement statement = con.createStatement();
+
+            System.out.println("Enter the Dispenser ID : ");
+            int Dispenser_ID = scanner.nextInt();
+
+            System.out.println("Enter price per liter :" );
+            int price_per_liter = scanner.nextInt();
+
+            System.out.println("Enter the repository ID : ");
+            int repository_ID = scanner.nextInt();
+
+            Scanner myObj = new Scanner(System.in);
+            System.out.println("Enter the Allowed Vehicles : ");
+            String Allowed_Vehicles = myObj.nextLine();
+
+            //Give the query
+            statement.executeUpdate("INSERT INTO diesel_dispenser VALUES('"+Dispenser_ID+"','"+price_per_liter+"','"+repository_ID+"','"+Allowed_Vehicles+"')");
+            System.out.println("Values added successfully");
+        } catch (Exception e){
+            System.out.println("Invalid data please re-enter");
+
         }
     }
 
