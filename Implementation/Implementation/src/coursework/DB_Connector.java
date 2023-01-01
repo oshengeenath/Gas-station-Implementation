@@ -40,6 +40,39 @@ public class DB_Connector { Connection con = null;
         }
     }
 
+    public void served_info(){
+        Scanner scanner = new Scanner(System.in);
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw?useSSL=false&serverTimezone=Asia/Colombo", "root", "root");
+            Statement statement = con.createStatement();
+
+            System.out.println("Enter the Dispenser ID : ");
+            int Dispenser_ID = scanner.nextInt();
+
+            System.out.println("Enter Customer ID");
+            int Customer_ID = scanner.nextInt();
+
+            System.out.println("Enter Date");
+            int Date = scanner.nextInt();
+
+            System.out.println("Enter Month");
+            int Month = scanner.nextInt();
+
+            System.out.println("Enter Year");
+            int Year = scanner.nextInt();
+
+            System.out.println("Enter Dispenser");
+            int Dispenser = scanner.nextInt();
+
+            //Give the query
+            statement.executeUpdate("INSERT INTO served_Info VALUES('"+Dispenser_ID+"','"+Customer_ID+"','"+Date+"','"+Month+"','"+Year+"','"+Dispenser+"')");
+            System.out.println("Values added successfully");
+        } catch (Exception e){
+            System.out.println("Invalid data please re-enter");
+        }
+    }
+
     public void add_92Octane_dispenser(){
         Scanner scanner = new Scanner(System.in);
         try {

@@ -26,8 +26,7 @@ public class Main {
         if (user_input == 1){
             db.add_Customer();
         } else if (user_input == 2) {
-
-            
+            db.served_info();
         }
         else if (user_input == 3) {
 
