@@ -8,7 +8,7 @@ public class DB_Connector { Connection con = null;
     public void connect(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw?useSSL=false&serverTimezone=Asia/Colombo", "root", "root");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "root");
 
         } catch (Exception e){
             System.out.println(e);
@@ -18,7 +18,7 @@ public class DB_Connector { Connection con = null;
         Scanner scanner = new Scanner(System.in);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw?useSSL=false&serverTimezone=Asia/Colombo", "root", "root");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "root");
             Statement statement = con.createStatement();
             System.out.println("Enter the ID : ");
             int customer_ID = scanner.nextInt();
@@ -44,7 +44,7 @@ public class DB_Connector { Connection con = null;
         Scanner scanner = new Scanner(System.in);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw?useSSL=false&serverTimezone=Asia/Colombo", "root", "root");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cw", "root", "root");
             Statement statement = con.createStatement();
 
             System.out.println("Enter the Dispenser ID : ");
@@ -142,8 +142,10 @@ public class DB_Connector { Connection con = null;
             while (rsFuelRepository.next()){
                 if (rsFuelRepository.getString(2).equals("octane92")){
                     petrolRepository = new FuelRepository(rsFuelRepository.getString(2), rsFuelRepository.getFloat(3));
+                    petrolRepository.setFuelLeft(rsFuelRepository.getFloat(4));
                 } else {
                     dieselRepository = new FuelRepository(rsFuelRepository.getString(2), rsFuelRepository.getFloat(3));
+                    dieselRepository.setFuelLeft(rsFuelRepository.getFloat(4));
                 }
             }
 
@@ -245,5 +247,61 @@ public class DB_Connector { Connection con = null;
             vehiclesAllowed[i] = Integer.parseInt(vehiclesAllowedString[i]);
         }
         return vehiclesAllowed;
+    }
+    public void addPetrolStock(float amount){
+        String query = "update fuel_repository set fuel_left=? where fuel_type=1";
+        try {
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setFloat(1, getOwner().getPetrolRepository().checkFuelLeft()+amount);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void addDieselStock(float amount){
+        String query = "update fuel_repository set fuel_left=? where fuel_type=2";
+        try {
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setFloat(1, getOwner().getDieselRepository().checkFuelLeft()+amount);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void reducePetrolStock(float fuelAmount){
+        try {
+            Statement st = con.createStatement();
+            ResultSet rsFuelRepository = st.executeQuery("select * from fuel_repository");
+            float fuelLeft = 0;
+            while (rsFuelRepository.next()){
+                if (rsFuelRepository.getInt(2) == 1){
+                    fuelLeft = rsFuelRepository.getFloat(4) - fuelAmount;
+                }
+            }
+            PreparedStatement pst = con.prepareStatement("update fuel_repository set fuel_Left="+fuelLeft+" where repository_ID=1");
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public void reduceDieselStock(float fuelAmount){
+        try {
+            Statement st = con.createStatement();
+            ResultSet rsFuelRepository = st.executeQuery("select * from fuel_repository");
+            float fuelLeft = 0;
+            while (rsFuelRepository.next()){
+                if (rsFuelRepository.getInt(2) == 2){
+                    fuelLeft = rsFuelRepository.getFloat(4) - fuelAmount;
+                }
+            }
+            PreparedStatement pst = con.prepareStatement("update fuel_repository set fuel_Left="+fuelLeft+" where repository_ID=2");
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 }

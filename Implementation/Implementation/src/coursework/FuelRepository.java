@@ -22,6 +22,10 @@ public class FuelRepository {
         return fuelLeft;
     }
 
+    public void setFuelLeft(float fuelLeft) {
+        this.fuelLeft = fuelLeft;
+    }
+
     //Creating getters for fuelType
     public String getFuelType() {
         return fuelType;
@@ -31,4 +35,5 @@ public class FuelRepository {
     public float getCapacity() {
         return capacity;
     }
+
 }

@@ -23,12 +23,16 @@ public class OctaneFuelDispenserManager implements FuelDispenseManager {
         this.dispense_ID = dispense_ID;
     }
     @Override
-    public void serveCustomer(DateTime date) {
+    public void serveCustomer(DateTime date)  {
+        DB_Connector dbConnector = new DB_Connector();
+        dbConnector.connect();
         Data data = new Data(this.dispense_ID,fuelQueue.getFirstCustomer(), date);
         dataArray.add(data);
         incrementVehiclesServed();
         incrementProfit(fuelQueue.getFirstCustomer());
         fuelQueue.removeCustomer(0);
+        this.repository.addFuel(-data.getCustomer().getFuel_Needed());
+        dbConnector.reducePetrolStock(data.getCustomer().getFuel_Needed());
     }
 
     public static void addData(Data data){
